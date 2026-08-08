@@ -15,17 +15,24 @@
     --sun:#FFCF3F;
     --mango:#F2905A;
     --cream:#FBF6E8;
+    --page-bg:#FBF6E8;
     --bark:#7A5230;
     --ink:#173324;
     --shadow: 0 14px 30px -12px rgba(18,53,36,0.35);
+  }
+  html[data-theme="dark"]{
+    --page-bg:#0F231A;
+    --ink:#DCEFE2;
+    --shadow: 0 14px 30px -12px rgba(0,0,0,0.5);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
     font-family:'Nunito', sans-serif;
-    background:var(--cream);
+    background:var(--page-bg);
     color:var(--ink);
     overflow-x:hidden;
+    transition:background .35s ease, color .35s ease;
   }
   h1,h2,h3,.display{
     font-family:'Baloo 2', sans-serif;
@@ -81,6 +88,7 @@
   .navlinks{ display:flex; gap:26px; font-weight:700; font-size:0.95rem; }
   .navlinks a{ opacity:.85; transition:opacity .2s; }
   .navlinks a:hover{ opacity:1; color:var(--sun); }
+  .nav-actions{ display:flex; align-items:center; gap:14px; }
   .navtoggle{ display:none; font-size:1.6rem; background:none; border:none; color:var(--cream); cursor:pointer; }
   @media(max-width:720px){
     .navlinks{ position:fixed; top:64px; left:0; right:0; background:var(--jungle-deep); flex-direction:column; padding:20px 24px; gap:16px; transform:translateY(-130%); transition:transform .3s ease; }
@@ -135,14 +143,45 @@
   .wali-card h3{ color:var(--jungle-deep); font-size:1.2rem; }
   .wali-card p{ font-size:0.92rem; color:#4b6b5a; margin-top:4px; }
 
+  /* ---------- Cari & Filter Siswa ---------- */
+  .siswa-toolbar{ margin-bottom:26px; }
+  .siswa-search{
+    position:relative; margin-bottom:16px;
+  }
+  .siswa-search input{
+    width:100%; font-family:'Nunito',sans-serif; font-weight:700; font-size:1rem;
+    padding:14px 20px 14px 46px; border-radius:999px; border:3px solid var(--leaf);
+    background:#fff; color:var(--ink); outline:none; transition:border-color .2s;
+  }
+  .siswa-search input:focus{ border-color:var(--jungle-deep); }
+  .siswa-search::before{
+    content:'🔍'; position:absolute; left:18px; top:50%; transform:translateY(-50%);
+    font-size:1.05rem; pointer-events:none;
+  }
+  .siswa-filters{ display:flex; flex-wrap:wrap; gap:10px; }
+  .filter-chip{
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:0.85rem;
+    padding:8px 18px; border-radius:999px; background:var(--canopy-light); color:var(--jungle-deep);
+    border:none; cursor:pointer; transition:.2s;
+  }
+  .filter-chip.active{ background:var(--sun); box-shadow:var(--shadow); }
+  .siswa-count{
+    margin-top:14px; font-size:0.85rem; font-weight:700; color:#4b6b5a;
+  }
+  .siswa-empty{
+    display:none; text-align:center; padding:40px 20px; color:#6a8577; font-weight:700;
+  }
+  .siswa-empty.show{ display:block; }
+
   .anggota-grid{
     display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:20px;
   }
   .siswa-card{
     background:#fff; border-radius:20px 20px 20px 4px; padding:16px 12px; text-align:center;
-    box-shadow:var(--shadow); transition:transform .25s ease;
+    box-shadow:var(--shadow); transition:transform .25s ease, opacity .25s ease;
   }
   .siswa-card:hover{ transform:translateY(-6px) rotate(-1deg); }
+  .siswa-card.hidden{ display:none; }
   .siswa-avatar{
     width:56px; height:56px; margin:0 auto 10px; border-radius:50%;
     background:var(--canopy-light); display:flex; align-items:center; justify-content:center;
@@ -197,9 +236,93 @@
   .note{
     max-width:640px; margin:14px auto 0; font-size:0.78rem; opacity:.55; line-height:1.5;
   }
+
+  /* ---------- Dark mode toggle ---------- */
+  .theme-toggle{
+    display:flex; align-items:center; justify-content:center;
+    width:38px; height:38px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(255,255,255,0.12); color:var(--cream); font-size:1.1rem;
+    transition:background .2s, transform .3s;
+  }
+  .theme-toggle:hover{ background:rgba(255,255,255,0.22); transform:rotate(-12deg); }
+
+  html[data-theme="dark"] .wali-card,
+  html[data-theme="dark"] .siswa-card,
+  html[data-theme="dark"] .pgm-card,
+  html[data-theme="dark"] .siswa-search input{
+    background:#173325;
+  }
+  html[data-theme="dark"] .section-head p,
+  html[data-theme="dark"] .wali-card p,
+  html[data-theme="dark"] .siswa-count,
+  html[data-theme="dark"] .siswa-empty,
+  html[data-theme="dark"] .siswa-card .rl,
+  html[data-theme="dark"] .pgm-card p{
+    color:#9FC2AE;
+  }
+  html[data-theme="dark"] .section-head h2,
+  html[data-theme="dark"] .wali-card h3,
+  html[data-theme="dark"] .siswa-card .nm,
+  html[data-theme="dark"] .pgm-card h3{
+    color:var(--ink);
+  }
+  html[data-theme="dark"] .siswa-search input{
+    color:var(--ink);
+  }
+  html[data-theme="dark"] .siswa-search input::placeholder{
+    color:#9FC2AE;
+  }
+  html[data-theme="dark"] .hero{
+    background:radial-gradient(circle at 50% -10%, #163d29 0%, #061309 60%);
+  }
+  html[data-theme="dark"] .hero p{ color:#B9D9C4; }
+  html[data-theme="dark"] .canopy path{ fill:var(--page-bg); }
+  /* ---------- Efek daun & satwa ---------- */
+  .effects-layer{
+    position:fixed; inset:0; z-index:40; overflow:hidden;
+    pointer-events:none;
+  }
+  .falling-leaf{
+    position:absolute; top:-40px; opacity:0;
+    filter:drop-shadow(0 4px 4px rgba(0,0,0,.15));
+  }
+  @keyframes leafFall{
+    0%{ transform:translate(0,0) rotate(0deg); opacity:0; }
+    8%{ opacity:.95; }
+    25%{ transform:translate(24px,25vh) rotate(90deg); }
+    50%{ transform:translate(-24px,50vh) rotate(180deg); }
+    75%{ transform:translate(24px,75vh) rotate(270deg); }
+    92%{ opacity:.9; }
+    100%{ transform:translate(-12px,108vh) rotate(360deg); opacity:0; }
+  }
+  .critter{ position:fixed; will-change:left; }
+  .critter-inner{
+    display:inline-block;
+    filter:drop-shadow(0 4px 6px rgba(0,0,0,.2));
+  }
+  @keyframes critterFlyRight{
+    from{ left:-60px; }
+    to{ left:calc(100% + 60px); }
+  }
+  @keyframes critterFlyLeft{
+    from{ left:calc(100% + 60px); }
+    to{ left:-60px; }
+  }
+  /* Burung: kepakan cepat, amplitudo kecil */
+  @keyframes flapBird{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-9px); }
+  }
+  /* Elang: melayang tenang, sedikit miring seperti gliding */
+  @keyframes glideEagle{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-7px) rotate(-4deg); }
+  }
 </style>
 </head>
 <body>
+
+<div class="effects-layer" id="effectsLayer" aria-hidden="true"></div>
 
 <svg class="vine-svg" preserveAspectRatio="none" viewBox="0 0 10 1000">
   <path id="vine-path" d="M5,0 C 20,150 -10,300 5,450 C 20,600 -10,750 5,1000" />
@@ -213,7 +336,10 @@
       <a href="#jadwal">Jadwal</a>
       <a href="#pengumuman">Pengumuman</a>
     </div>
-    <button class="navtoggle" id="navtoggle">☰</button>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Ganti mode terang/gelap">🌙</button>
+      <button class="navtoggle" id="navtoggle">☰</button>
+    </div>
   </div>
 </nav>
 
@@ -256,40 +382,56 @@
         </div>
       </div>
 
-      <div class="anggota-grid reveal">
-        <div class="siswa-card"><div class="siswa-avatar">🐯</div><div class="nm">Gilang Pratama 1</div><div class="rl">Ketua Kelas</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦜</div><div class="nm">Tri Hardiansyah 2</div><div class="rl">Wakil Ketua</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐨</div><div class="nm">Ashaskya Berkah 3</div><div class="rl">Sekretaris</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐸</div><div class="nm">Dame Septiana Napitulu 4</div><div class="rl">Bendahara</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦋</div><div class="nm">Ai Nurmalasari 5</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐢</div><div class="nm">Alvin Pratama 6</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦥</div><div class="nm">Arya Putra G 7</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦉</div><div class="nm">Daizy Alwi Ilham 8</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐼</div><div class="nm">Excel Febriano 9</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦒</div><div class="nm">Fhelia Permana P 10</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐘</div><div class="nm">Hafizh Ken Albasith 11</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦓</div><div class="nm">Irva Ahmad Fauzan 12</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐵</div><div class="nm">Khalifah Avanza F 13</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦩</div><div class="nm">M. Anwar Nasihin 14</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦔</div><div class="nm">M. RAFI SYAHIDAN 15</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐿️</div><div class="nm">M. Dafa Farizky Y 16</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦚</div><div class="nm">M. KAFIE EL AZAM 17</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐊</div><div class="nm">M. Vidy Rahman 18</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦦</div><div class="nm">Naira Riva Tunnisa 19</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦨</div><div class="nm">Nazla Choerunissa 20</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐺</div><div class="nm">Padli Muhammad F 21</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦇</div><div class="nm">Rafka Ramadhan 22</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐍</div><div class="nm">Rangga Zaky R 23</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦎</div><div class="nm">Reyza Aulia 24</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐹</div><div class="nm">Ridwan Abdul Gani 25</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦡</div><div class="nm">Ruliana Asyril M 26</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐔</div><div class="nm">Sani Nur Cahyani 27</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦆</div><div class="nm">Siti Mursyida M 28</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐇</div><div class="nm">Tira Aulia 29</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🦅</div><div class="nm">Zakiyah Nazla H 30</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐝</div><div class="nm">Karina Putri 31</div><div class="rl">Anggota</div></div>
-        <div class="siswa-card"><div class="siswa-avatar">🐞</div><div class="nm">Verlita Dinda Eviana 32</div><div class="rl">Anggota</div></div>
+      <div class="siswa-toolbar reveal">
+        <div class="siswa-search">
+          <input type="text" id="siswaSearch" placeholder="Cari nama siswa..." aria-label="Cari nama siswa">
+        </div>
+        <div class="siswa-filters" id="siswaFilters">
+          <button class="filter-chip active" data-role="semua">Semua</button>
+          <button class="filter-chip" data-role="ketua kelas">Ketua Kelas</button>
+          <button class="filter-chip" data-role="wakil ketua">Wakil Ketua</button>
+          <button class="filter-chip" data-role="sekretaris">Sekretaris</button>
+          <button class="filter-chip" data-role="bendahara">Bendahara</button>
+          <button class="filter-chip" data-role="anggota">Anggota</button>
+        </div>
+        <div class="siswa-count" id="siswaCount"></div>
       </div>
+
+      <div class="anggota-grid reveal" id="anggotaGrid">
+        <div class="siswa-card" data-role="ketua kelas"><div class="siswa-avatar">🐯</div><div class="nm">Gilang Pratama 9</div><div class="rl">Ketua Kelas</div></div>
+        <div class="siswa-card" data-role="wakil ketua"><div class="siswa-avatar">🦜</div><div class="nm">Tri Hardiansyah 30</div><div class="rl">Wakil Ketua</div></div>
+        <div class="siswa-card" data-role="sekretaris"><div class="siswa-avatar">🐨</div><div class="nm">Ashaskya Berkah 4</div><div class="rl">Sekretaris</div></div>
+        <div class="siswa-card" data-role="bendahara"><div class="siswa-avatar">🐸</div><div class="nm">Dame Septiana Napitulu 6</div><div class="rl">Bendahara</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦋</div><div class="nm">Ai Nurmalasari 1</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐢</div><div class="nm">Alvin Pratama 2</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦥</div><div class="nm">Arya Putra G 3</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦉</div><div class="nm">Daizy Alwi Ilham 5</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐼</div><div class="nm">Excel Febriano 7</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦒</div><div class="nm">Fhelia Permana P 8</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐘</div><div class="nm">Hafizh Ken Albasith 10</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦓</div><div class="nm">Irva Ahmad Fauzan 12</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐵</div><div class="nm">Khalifah Avanza F 13</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦩</div><div class="nm">M. Anwar Nasihin 14</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦔</div><div class="nm">M. RAFI SYAHIDAN 15</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐿️</div><div class="nm">M. Dafa Farizky Y 16</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦚</div><div class="nm">M. KAFIE EL AZAM 17</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐊</div><div class="nm">M. Vidy Rahman 18</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦦</div><div class="nm">Naira Riva Tunnisa 19</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦨</div><div class="nm">Nazla Choerunissa 20</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐺</div><div class="nm">Padli Muhammad F 21</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦇</div><div class="nm">Rafka Ramadhan 22</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐍</div><div class="nm">Rangga Zaky R 23</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦎</div><div class="nm">Reyza Aulia 24</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐹</div><div class="nm">Ridwan Abdul Gani 25</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦡</div><div class="nm">Ruliana Asyril M 26</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐔</div><div class="nm">Sani Nur Cahyani 27</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦆</div><div class="nm">Siti Mursyida M 28</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐇</div><div class="nm">Tira Aulia 29</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🦅</div><div class="nm">Zakiyah Nazla H 31</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐝</div><div class="nm">Karina Putri 32</div><div class="rl">Anggota</div></div>
+        <div class="siswa-card" data-role="anggota"><div class="siswa-avatar">🐞</div><div class="nm">Verlita Dinda Eviana 33</div><div class="rl">Anggota</div></div>
+      </div>
+      <div class="siswa-empty" id="siswaEmpty">🍂 Hmm, siswa dengan nama itu tidak ditemukan.</div>
     </div>
   </section>
 
@@ -352,11 +494,11 @@
           <div><h3>ACARA AGUSTUSAN</h3><p>dalam memperingati hari ulang tahun republic indonesia ke 81</p></div>
         </div>
         <div class="pgm-card info">
-          <div class="pgm-date"><div class="d">20</div><div class="m">Nov</div></div>
+          <div class="pgm-date"><div class="d">10</div><div class="m">Dec</div></div>
           <div><h3>DIES NATALIES</h3><p>DALAM MEMPERINGATI ANNIVERSARY SMPN 9 TASIKMALAYA</p></div>
         </div>
         <div class="pgm-card">
-          <div class="pgm-date"><div class="d">10</div><div class="m">DEC</div></div>
+          <div class="pgm-date"><div class="d">25</div><div class="m">Agu</div></div>
           <div><h3>PORAK</h3><p>Lomba Antar Kelas</p></div>
         </div>
       </div>
@@ -371,6 +513,23 @@
 </footer>
 
 <script>
+  // Dark mode toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const htmlEl = document.documentElement;
+  function setTheme(theme){
+    htmlEl.setAttribute('data-theme', theme);
+    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    try { localStorage.setItem('kelas8i-theme', theme); } catch(e){}
+  }
+  let savedTheme = null;
+  try { savedTheme = localStorage.getItem('kelas8i-theme'); } catch(e){}
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+  themeToggle.addEventListener('click', () => {
+    const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+  });
+
   // Nav toggle (mobile)
   const navtoggle = document.getElementById('navtoggle');
   const navlinks = document.getElementById('navlinks');
@@ -388,6 +547,41 @@
       document.querySelector('.jadwal-list[data-day="' + btn.dataset.day + '"]').classList.add('active');
     });
   });
+
+  // Cari & filter siswa
+  const siswaSearch = document.getElementById('siswaSearch');
+  const filterChips = document.querySelectorAll('#siswaFilters .filter-chip');
+  const siswaCards = document.querySelectorAll('#anggotaGrid .siswa-card');
+  const siswaCount = document.getElementById('siswaCount');
+  const siswaEmpty = document.getElementById('siswaEmpty');
+  let activeRole = 'semua';
+
+  function applySiswaFilter(){
+    const keyword = siswaSearch.value.trim().toLowerCase();
+    let visible = 0;
+    siswaCards.forEach(card => {
+      const nama = card.querySelector('.nm').textContent.toLowerCase();
+      const role = card.dataset.role;
+      const cocokNama = nama.includes(keyword);
+      const cocokRole = activeRole === 'semua' || role === activeRole;
+      const tampil = cocokNama && cocokRole;
+      card.classList.toggle('hidden', !tampil);
+      if (tampil) visible++;
+    });
+    siswaCount.textContent = `Menampilkan ${visible} dari ${siswaCards.length} siswa`;
+    siswaEmpty.classList.toggle('show', visible === 0);
+  }
+
+  siswaSearch.addEventListener('input', applySiswaFilter);
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      filterChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeRole = chip.dataset.role;
+      applySiswaFilter();
+    });
+  });
+  applySiswaFilter();
 
   // Reveal on scroll
   const revealEls = document.querySelectorAll('.reveal');
@@ -408,6 +602,61 @@
   }
   window.addEventListener('scroll', updateVine);
   updateVine();
+
+  // Daun berguguran & satwa melintas
+  const effectsLayer = document.getElementById('effectsLayer');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const leafEmojis = ['🍃','🍂','🍁'];
+
+  function spawnLeaf(){
+    const leaf = document.createElement('div');
+    leaf.className = 'falling-leaf';
+    leaf.textContent = leafEmojis[Math.floor(Math.random()*leafEmojis.length)];
+    const duration = 8 + Math.random()*6;
+    leaf.style.left = (Math.random()*96) + 'vw';
+    leaf.style.fontSize = (1 + Math.random()*0.9) + 'rem';
+    leaf.style.animation = `leafFall ${duration}s linear forwards`;
+    effectsLayer.appendChild(leaf);
+    setTimeout(() => leaf.remove(), duration*1000 + 300);
+  }
+
+  const critterTypes = [
+    { e:'🐦', size:1.5, anim:'flapBird',  bobDur:0.5, durMin:8,  durMax:13, topMin:6, topMax:20 },
+    { e:'🦅', size:2.2, anim:'glideEagle', bobDur:2.2, durMin:15, durMax:23, topMin:5, topMax:15 }
+  ];
+
+  function spawnCritter(){
+    const pick = critterTypes[Math.floor(Math.random()*critterTypes.length)];
+    const critter = document.createElement('div');
+    critter.className = 'critter';
+    critter.style.top = (pick.topMin + Math.random()*(pick.topMax - pick.topMin)) + 'vh';
+    const duration = pick.durMin + Math.random()*(pick.durMax - pick.durMin);
+    const goRight = Math.random() > 0.5;
+    // Posisi & arah hadap (mirror) di elemen LUAR — tidak disentuh animasi kepak
+    critter.style.transform = goRight ? 'scaleX(-1)' : 'scaleX(1)';
+    critter.style.animation = `${goRight ? 'critterFlyRight' : 'critterFlyLeft'} ${duration}s linear forwards`;
+
+    // Animasi kepak/gliding di elemen DALAM — supaya tidak menimpa transform mirror di luar
+    const inner = document.createElement('span');
+    inner.className = 'critter-inner';
+    inner.textContent = pick.e;
+    inner.style.fontSize = pick.size + 'rem';
+    inner.style.animation = `${pick.anim} ${pick.bobDur}s ease-in-out infinite`;
+    critter.appendChild(inner);
+
+    effectsLayer.appendChild(critter);
+    setTimeout(() => critter.remove(), duration*1000 + 300);
+  }
+
+  function scheduleCritter(){
+    const delay = 10000 + Math.random()*14000;
+    setTimeout(() => { spawnCritter(); scheduleCritter(); }, delay);
+  }
+
+  if (!reducedMotion){
+    setInterval(spawnLeaf, 900);
+    scheduleCritter();
+  }
 
   // Reduced motion respect
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
